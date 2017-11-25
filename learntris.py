@@ -2,6 +2,7 @@
 
 import sys
 import pdb  # pdb.set_trace()
+import copy
 
 class Tetramino(object):
     def __init__(self, shape=None):
@@ -37,7 +38,7 @@ class Tetramino(object):
             print(" ".join(self.grid[i]))
             
     def rotate_cw(self):
-        newmx = self.grid
+        newmx = [["." for j in range(self.diag)] for i in range(self.diag)]
         for i in range(self.diag):
             for j in range(self.diag):
                 newmx[j][self.diag-i-1] = self.grid[i][j]
@@ -88,7 +89,10 @@ if __name__ == "__main__":
         for x in cmds:
             
             if x == "q":
-                sys.exit(0)        
+                sys.exit(0)
+
+            elif x == ";":
+                print()
                 
             elif x == "p":
                 matrix.printit()
