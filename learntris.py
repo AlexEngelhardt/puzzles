@@ -6,28 +6,39 @@ import copy
 
 class Tetramino(object):
     def __init__(self, shape=None):
+        self.shape = shape
+        
         if shape == "I":
             self.diag = 4
+            self.spawncol = 3            
             initstring = "....cccc........"
         if shape == "O":
             self.diag = 2
+            self.spawncol = 4
             initstring = "yyyy"
         if shape == "Z":
             self.diag = 3
+            self.spawncol = 3
             initstring = "rr..rr..."
         if shape == "S":
             self.diag = 3
+            self.spawncol = 3
             initstring = ".gggg...."
         if shape == "J":
             self.diag = 3
+            self.spawncol = 3
             initstring = "b..bbb..."
         if shape == "L":
             self.diag = 3
+            self.spawncol = 3
             initstring = "..oooo..."
         if shape == "T":
             self.diag = 3
+            self.spawncol = 3
             initstring = ".m.mmm..."
             
+        self.pos11 = [0, self.spawncol]
+        
         self.grid = [["." for j in range(self.diag)] for i in range(self.diag)]
         for i in range(self.diag):
             for j in range(self.diag):
@@ -43,7 +54,8 @@ class Tetramino(object):
             for j in range(self.diag):
                 newmx[j][self.diag-i-1] = self.grid[i][j]
         self.grid = newmx
-            
+
+           
 
 class Matrix(object):
     def __init__(self, width=10, height=22):
@@ -52,7 +64,7 @@ class Matrix(object):
         self.state = [["." for j in range(width)] for i in range(height)]
         self.score = 0
         self.n_cleared = 0
-        self.active_tetramino = None
+        self.active_tetr = None
         
     def clear(self):
         self.state = [["." for j in range(self.width)] for i in range(self.height)]
@@ -65,7 +77,18 @@ class Matrix(object):
             for col in range(self.width):
                 print(self.state[row][col], end=" ")
             print()  # plain newline
-            
+
+    def print_w_active(self):
+        state = self.state
+        curr_pos = self.active_tetr.pos11
+        for row_i in range(self.active_tetr.diag):
+            for col_i in range(self.active_tetr.diag):
+                state[curr_pos[0] + row_i][curr_pos[1] + col_i] = self.active_tetr.grid[row_i][col_i].upper()
+        for row in range(self.height):  # printit() copied
+            for col in range(self.width):
+                print(state[row][col], end=" ")
+            print()  
+
     def set_row(self, i, lst):
         self.state[i] = lst
 
@@ -79,16 +102,45 @@ class Matrix(object):
                 self.n_cleared += 1
                 self.score += 100
 
+    def spawn(self, shape):
+        self.active_tetr = Tetramino(shape)
 
+    def nudge(self, direction):
+        if direction == "<":
+            if self.active_tetr.pos11[1] != 0:
+                addme = [0, -1]
+            else:  # hit left wall
+                addme = [0, 0]
+        elif direction == ">":
+            if self.active_tetr.pos11[1] + self.active_tetr.diag < self.width:
+                addme = [0, +1]
+            else:  # hit left wall
+                addme = [0, 0]
+
+        elif direction == "v":
+            addme = [+1, 0]
+
+        self.active_tetr.pos11[0] += addme[0]
+        self.active_tetr.pos11[1] += addme[1]
+
+
+        
 if __name__ == "__main__":                
     matrix = Matrix()
     
     while True:
         inp = input()
-        cmds = inp.split(" ")
-        for x in cmds:
+        cmds = list(inp)
+
+        i = -1
+        while i < (len(cmds)-1):
+            i += 1
+            x = cmds[i]
+
+            if x == " ":
+                continue
             
-            if x == "q":
+            elif x == "q":
                 sys.exit(0)
 
             elif x == ";":
@@ -104,24 +156,37 @@ if __name__ == "__main__":
                     
             elif x == "c":
                 matrix.clear()
-                
-            elif x == "?s":
-                print(matrix.score)
-                
-            elif x == "?n":
-                print(matrix.n_cleared)
+
+            elif x == "?":
+                i += 1
+                x = cmds[i]
+                if x == "s":  # ?s
+                    print(matrix.score)
+                elif x == "n":  # ?n
+                    print(matrix.n_cleared)
                 
             elif x == "s":
                 matrix.step()
                 
             elif x in ["I", "O", "Z", "S", "J", "L", "T"]:
-                active = Tetramino(x)
+                matrix.spawn(x)
                 
             elif x == "t":
-                active.printit()
+                matrix.active_tetr.printit()
                 
             elif x == ")":
-                active.rotate_cw()
-                
+                matrix.active_tetr.rotate_cw()
+            elif x == "(":
+                matrix.active_tetr.rotate_cw()
+                matrix.active_tetr.rotate_cw()
+                matrix.active_tetr.rotate_cw()
+
+            elif x == "P":
+                matrix.print_w_active()
+
+            elif x in [">", "<", "v"]:
+                matrix.nudge(x)
+            
             else:
+                print("OMG UNRECOGNIZED COMMAND")
                 sys.exit(0)
