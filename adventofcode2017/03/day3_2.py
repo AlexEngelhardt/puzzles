@@ -95,10 +95,5 @@ class Grid:
 if __name__ == "__main__":    
     grid = Grid(rings=5)
 
-    # for i in range(20):
-    #     print("Coord " + str(i) + ": " + str(grid.get_coord_by_i(i)))
-
-    # print(grid.get_elem_by_coord([-1, -2]))
-
     print(grid.get_chain(grid.n_elems))
     print(grid.get_first_greater_than(368078))
