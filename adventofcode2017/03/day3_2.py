@@ -1,5 +1,12 @@
+"""
+Solution for the second part of this puzzle:
+http://adventofcode.com/2017/day/3
+"""
+
 class Grid:
-    
+    """
+    Creates a grid with a specified number of rings
+    """
     def __init__(self, rings):
         self.rings = rings
         self.n_elems = (2*rings - 1) ** 2
@@ -8,6 +15,9 @@ class Grid:
         self.fill_chain()
 
     def fill_chain(self):
+        """
+        Fills the entire chain subsequently with values
+        """
         self.chain[0] = 1
         for i in range(1, self.n_elems):
             coord = self.get_coord_by_i(i)
@@ -25,47 +35,59 @@ class Grid:
         direction = "right"
         for i in range(1, self.n_elems):
             if direction == "right":
-                x = self.coords[i-1][0]
-                y = self.coords[i-1][1] + 1
-                if x + 1 == y:
+                x_val = self.coords[i-1][0]
+                y_val = self.coords[i-1][1] + 1
+                if x_val + 1 == y_val:
                     # switch walking direction from right to up in these
                     # "lower right" corners of the grid
                     direction = "up"
-                    
+
             elif direction == "up":
-                x = self.coords[i-1][0] - 1
-                y = self.coords[i-1][1]
-                if -x == y:
+                x_val = self.coords[i-1][0] - 1
+                y_val = self.coords[i-1][1]
+                if -x_val == y_val:
                     direction = "left"
-                    
+
             elif direction == "left":
-                x = self.coords[i-1][0]
-                y = self.coords[i-1][1] - 1
-                if x == y:
+                x_val = self.coords[i-1][0]
+                y_val = self.coords[i-1][1] - 1
+                if x_val == y_val:
                     direction = "down"
-                    
+
             elif direction == "down":
-                x = self.coords[i-1][0] + 1
-                y = self.coords[i-1][1] 
-                if -x == y:
+                x_val = self.coords[i-1][0] + 1
+                y_val = self.coords[i-1][1]
+                if -x_val == y_val:
                     direction = "right"
-                    
-            self.coords.append([x, y])
-            
+
+            self.coords.append([x_val, y_val])
+
     def get_coord_by_i(self, i):
+        """
+        Are you serious, pylint?
+        """
         return self.coords[i]
 
     def get_neighboring_coords(self, coord):
+        """
+        Finds all 8 neighboring coordinates of the supplied coord.
+        If the coord is close to the border of the grid, it will skip these coords.
+        """
         return [
             [coord[0]+dx, coord[1]+dy]
             for dx in range(-1, 2)
             for dy in range(-1, 2)
-            if (not (dx==0 and dy==0))  # so that the field is not its own neighbor
-            and (not abs(coord[0]+dx) >= self.rings)  # here we check that the fields are not outside of the outermost ring
+            if not (dx == 0 and dy == 0)  # so that the field is not its own neighbor
+            # here we check that the fields are not outside of the outermost ring:
+            and (not abs(coord[0]+dx) >= self.rings)
             and (not abs(coord[1]+dy) >= self.rings)
         ]
-        
+
     def fill_this_chain_elem(self, coord):
+        """
+        Fills one chain element with the sum of all neighboring
+        elements' values.
+        """
         neighbors = self.get_neighboring_coords(coord)
         total = 0
         for neighbor_coord in neighbors:
@@ -73,27 +95,39 @@ class Grid:
             # print("I got val=" + str(this_val) + " from coord " + str(neighbor_coord))
             total += this_val
         return total
-        
+
     def get_chain(self, length):
+        """
+        Returns the first 'length' elements of the chain.
+        """
         return self.chain[0:length]
 
     def get_elem_by_i(self, i):  # actually, only used for test code
+        """
+        Returns element number i
+        """
         return self.chain[i]
-    
+
     def get_elem_by_coord(self, coord):
+        """
+        Gets an element specified by coordinates
+        """
         for i in range(self.n_elems):
             c_i = self.get_coord_by_i(i)
             if coord[0] == c_i[0] and coord[1] == c_i[1]:
                 return self.chain[i]
 
     def get_first_greater_than(self, num):
+        """
+        Returns the answer for the puzzle!
+        """
         for i in range(self.n_elems):
             if self.chain[i] > num:
                 return self.chain[i]
         return None
 
-if __name__ == "__main__":    
-    grid = Grid(rings=5)
+if __name__ == "__main__":
+    GRID = Grid(rings=5)
 
-    print(grid.get_chain(grid.n_elems))
-    print(grid.get_first_greater_than(368078))
+    print(GRID.get_chain(GRID.n_elems))
+    print(GRID.get_first_greater_than(368078))
