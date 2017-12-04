@@ -10,7 +10,7 @@ class Grid:
     def __init__(self, rings):
         self.rings = rings
         self.n_elems = (2*rings - 1) ** 2
-        self.chain = [0 for i in range(self.n_elems)]
+        self.chain = [0 for _ in range(self.n_elems)]  # SO review!
         self.make_coords()
         self.fill_chain()
 
@@ -89,24 +89,14 @@ class Grid:
         elements' values.
         """
         neighbors = self.get_neighboring_coords(coord)
-        total = 0
-        for neighbor_coord in neighbors:
-            this_val = self.get_elem_by_coord(neighbor_coord)
-            # print("I got val=" + str(this_val) + " from coord " + str(neighbor_coord))
-            total += this_val
-        return total
+        return sum(self.get_elem_by_coord(neighbor_coord)  # SO review!
+                   for neighbor_coord in neighbors)
 
     def get_chain(self, length):
         """
         Returns the first 'length' elements of the chain.
         """
-        return self.chain[0:length]
-
-    def get_elem_by_i(self, i):  # actually, only used for test code
-        """
-        Returns element number i
-        """
-        return self.chain[i]
+        return self.chain[:length]  # SO review!
 
     def get_elem_by_coord(self, coord):
         """

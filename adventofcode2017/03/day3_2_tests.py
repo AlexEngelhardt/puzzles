@@ -15,16 +15,16 @@ class GridTest(unittest.TestCase):
         """
         This tests that the first element in the Ulam spiral is 1
         """
-        self.assertEqual(self.grid.get_elem_by_i(0), 1)
+        self.assertEqual(self.grid.chain[0], 1)
 
     def test_get_elem_by_i(self):
-        self.assertEqual(self.grid.get_elem_by_i(1), 1)
-        self.assertEqual(self.grid.get_elem_by_i(2), 2)
-        self.assertEqual(self.grid.get_elem_by_i(3), 4)
-        self.assertEqual(self.grid.get_elem_by_i(4), 5)
-        self.assertEqual(self.grid.get_elem_by_i(5), 10)
-        self.assertEqual(self.grid.get_elem_by_i(6), 11)
-        self.assertEqual(self.grid.get_elem_by_i(7), 23)
+        self.assertEqual(self.grid.chain[1], 1)
+        self.assertEqual(self.grid.chain[2], 2)
+        self.assertEqual(self.grid.chain[3], 4)
+        self.assertEqual(self.grid.chain[4], 5)
+        self.assertEqual(self.grid.chain[5], 10)
+        self.assertEqual(self.grid.chain[6], 11)
+        self.assertEqual(self.grid.chain[7], 23)
 
     def test_get_chain(self):
         self.assertEqual(self.grid.get_chain(1), [1])
