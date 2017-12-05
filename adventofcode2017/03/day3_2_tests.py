@@ -2,7 +2,7 @@
 import unittest
 from day3_2 import Grid
 
-class GridTest(unittest.TestCase):
+class GridIntegrationTests(unittest.TestCase):
     
     def setUp(self):
         self.grid = Grid(rings=4)
