@@ -31,26 +31,17 @@ for i in range(frames):
 
     if i in range(figures_only_at[0], figures_only_at[1]):
         # For some reason, we have to flip the y axis, i.e. use
-        # the negative of points[:, 1]
+        # the negative of points[:, 1] for plotting
         plt.scatter(points[:, 0], -points[:, 1])
         plt.savefig(f'img/{i}.jpg')
         plt.close()
 
     if (areas[i] > areas[i-1]) and (areas[i-2] > areas[i-1]):
         print(f'Local minimum found at i={i-1}')
-
         # If you found a minimum of the convex hull, run this loop for
         # 10 more steps, then abort.
         the_max = i + 10
-
     if i > the_max:
         break
 
     points += velocities  # advance one frame
-
-# Show the convex hull per frame
-# plt.plot(range(frames), areas)
-# plt.show()
-
-# plt.scatter(points[:, 0], points[:, 1])
-# plt.show()
