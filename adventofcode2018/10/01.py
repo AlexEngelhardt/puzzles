@@ -30,7 +30,9 @@ for i in range(frames):
     # print(f'Convex hull: {areas[i]}')
 
     if i in range(figures_only_at[0], figures_only_at[1]):
-        plt.scatter(points[:, 0], points[:, 1])
+        # For some reason, we have to flip the y axis, i.e. use
+        # the negative of points[:, 1]
+        plt.scatter(points[:, 0], -points[:, 1])
         plt.savefig(f'img/{i}.jpg')
         plt.close()
 
