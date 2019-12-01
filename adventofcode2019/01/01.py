@@ -1,10 +1,4 @@
-import math
-
-total = 0
-
 with open('input', 'r') as f:
-    for line in f:
-        i = int(line)
-        total += i // 3 - 2
+    total = sum([int(i) // 3 - 2 for i in f])
 
 print(total)
