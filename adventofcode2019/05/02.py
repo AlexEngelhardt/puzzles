@@ -105,7 +105,6 @@ while instruction_pointer < mem_size:
             ]
 
             if thebool != 0:
-                print(f'setting instruction pointer to {parameters[1]}')
                 instruction_pointer = memory[
                     get_value(memory, parameters[1], instruction_pointer + 2)
                 ]
@@ -116,7 +115,6 @@ while instruction_pointer < mem_size:
             ]
 
             if thebool == 0:
-                print(f'setting instruction pointer to {parameters[1]}')
                 instruction_pointer = memory[
                     get_value(memory, parameters[1], instruction_pointer + 2)
                 ]
@@ -126,4 +124,4 @@ while instruction_pointer < mem_size:
 
     instruction_pointer += instruction_length
 
-raise ValueError('Instruction pointer went over memory size!')
+
