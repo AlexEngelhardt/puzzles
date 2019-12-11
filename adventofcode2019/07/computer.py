@@ -3,10 +3,10 @@ class ExitOpcode(Exception):
 
 
 class Computer():
-    def __init__(self, memory, inputs, debug=False):
+    def __init__(self, memory, inputs=[], debug=False):
         self.memory = memory
         self.debug = debug
-        self.inputs = inputs  # a list that gets popped from left-to-right
+        self.inputs = inputs  # a *stack* that gets popped from left-to-right
         self.iptr = 0  # instruction pointer
 
     def step(self):
@@ -38,14 +38,19 @@ class Computer():
         else:
             raise ValueError(f'Unknown opcode {opcode} '
                              f'in position {self.iptr}')
+        return opcode
 
     def run(self):
         while self.iptr < len(self.memory):
             try:
-                self.step()
+                opcode = self.step()
             except ExitOpcode:
                 if self.debug:
                     print('exit opcode reached')
+                raise
+            if opcode == 4:
+                # In case we reached a output, *pause* the computer.
+                # This started to be important in day 7 part 2
                 break
         return self.last_output
 
@@ -79,6 +84,8 @@ class Computer():
         target = self.memory[self.iptr + 1]
         if self.debug:
             print(f'Popping input value {self.inputs[0]}')
+        if len(self.inputs) < 1:
+            raise ValueError('Empty input stack!')
         self.memory[target] = self.inputs[0]
         del self.inputs[0]
         self.iptr += 2
