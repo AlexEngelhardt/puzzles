@@ -11,10 +11,6 @@ with open(filename) as f:
 
 numbers
 
-# The fastest way might be to create a large matrix of shifted and repeated
-# patterns. But that consumes a lot of memory I guess
-
-
 def create_pattern(i, length):
     output = np.repeat([0, 1, 0, -1], i)
     if len(output) < length:
@@ -34,8 +30,6 @@ def phase(input):
 
 
 n_phases = 100
-
-# numbers = np.tile(numbers, 10000)
 
 for p in range(n_phases):
     numbers = phase(numbers)
