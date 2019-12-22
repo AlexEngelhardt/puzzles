@@ -1,3 +1,7 @@
+import os
+os.chdir('/home/alexx/github/puzzles/adventofcode2019/22')
+
+
 class Deck():
     def __init__(self, n_cards):
         self.stack = list(range(n_cards))
@@ -20,14 +24,15 @@ class Deck():
 
 
 deck = Deck(10)
-deck.stack
-deck.deal_with_increment(7)
-deck.deal_into_new_stack()
-deck.deal_into_new_stack()
-deck.stack
 
-deck = Deck(10)
-deck.deal_with_increment(7)
-deck.deal_with_increment(9)
-deck.cut(-2)
+with open('test-input') as f:
+    for line in f:
+        line = line.strip()
+        if line == 'deal into new stack':
+            deck.deal_into_new_stack()
+        elif line.startswith('cut'):
+            deck.cut(int(line.split(' ')[-1]))
+        elif line.startswith('deal with increment'):
+            deck.deal_with_increment(int(line.split(' ')[-1]))
+
 deck.stack
