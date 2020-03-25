@@ -23,9 +23,9 @@ class Deck():
         self.stack = new_stack
 
 
-deck = Deck(10)
+deck = Deck(10007)
 
-with open('test-input') as f:
+with open('input') as f:
     for line in f:
         line = line.strip()
         if line == 'deal into new stack':
@@ -35,4 +35,4 @@ with open('test-input') as f:
         elif line.startswith('deal with increment'):
             deck.deal_with_increment(int(line.split(' ')[-1]))
 
-deck.stack
+deck.stack.index(2019)
