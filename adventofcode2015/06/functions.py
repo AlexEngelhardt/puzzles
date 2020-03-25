@@ -1,5 +1,5 @@
-def create_grid(x, y):
-    return [[False for y_i in range(y)] for x_i in range(x)]
+def create_grid(x, y, init_with=False):
+    return [[init_with for y_i in range(y)] for x_i in range(x)]
 
 
 def print_grid(grid):
@@ -36,6 +36,19 @@ def op_step(operation, grid):
                 grid[x][y] = False
             elif opcode == 'toggle':
                 grid[x][y] = not grid[x][y]
+    return grid
+
+
+def op_step2(operation, grid):
+    opcode, x_start, x_stop, y_start, y_stop = operation
+    for x in range(x_start, x_stop+1):
+        for y in range(y_start, y_stop+1):
+            if opcode == 'turn on':
+                grid[x][y] = grid[x][y] + 1
+            elif opcode == 'turn off':
+                grid[x][y] = max(grid[x][y] - 1, 0)
+            elif opcode == 'toggle':
+                grid[x][y] = grid[x][y] + 2
     return grid
 
 
