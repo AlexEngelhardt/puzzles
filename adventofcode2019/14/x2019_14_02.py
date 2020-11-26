@@ -72,7 +72,8 @@ print(topo_order)
 # Now we can traverse the deque backwards and fill out how many of each we need
 
 we_need = defaultdict(int)
-we_need['FUEL'] = 1
+# 79938321 is too high
+we_need['FUEL'] = 7993831  # Brute force binary search :3
 
 while topo_order:
     substance = topo_order.pop()
@@ -88,4 +89,3 @@ while topo_order:
         we_need[inp_sub_name] += inp_sub_quantity / r.output_quantity * amount_needed
 
 print(we_need['ORE'])
-
