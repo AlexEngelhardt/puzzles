@@ -1,5 +1,5 @@
 # this attempt failed.
-# The other 01.py was smarter (where I computed angles between asteroids,
+# The other x2020_01_01.py was smarter (where I computed angles between asteroids,
 # and counted unique angles)
 
 import numpy as np
