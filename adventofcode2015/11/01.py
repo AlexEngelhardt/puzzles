@@ -70,6 +70,6 @@ print(test_input)
 print(next_valid_password(test_input))
 
 print(real_input)
-print(next_valid_password(real_input))
-print(next_valid_password(next_valid_password(real_input)))
+print(next_valid_password(real_input))  # answer to part 1
+print(next_valid_password(next_valid_password(real_input)))  # answer to part 2
 
