@@ -1,10 +1,14 @@
 import math
 
-# debug = True
-debug = False
+#test = True
+test = False
 
-if debug:
+verbose = True
+#verbose = False
+
+if test:
     filename = 'test_input'
+    #filename = 'my_test_input'
 else:
     filename = 'input'
 
@@ -23,7 +27,8 @@ class Ship:
         self.y = 0
 
     def status(self):
-        return f"Ship: (x={self.x}, y={self.y}), Waypoint: (x={self.waypoint_x}, y={self.waypoint_y})"
+        # return f"Ship: (x={self.x}, y={self.y}), Waypoint: (x={self.waypoint_x}, y={self.waypoint_y})"
+        return f"Ship: ({self.x}, {self.y}), Waypoint: ({self.waypoint_x}, {self.waypoint_y})"
 
     def get_manhattan_dist(self):
         return abs(self.x) + abs(self.y)
@@ -41,7 +46,7 @@ class Ship:
         # 2. Rotate the point around the origin (0, 0)
         degrees_rad = degrees / 360 * 2*math.pi
         new_x = self.waypoint_x * math.cos(degrees_rad) - self.waypoint_y * math.sin(degrees_rad)
-        new_y = self.waypoint_x * math.sin(degrees_rad) + self.waypoint_x * math.cos(degrees_rad)
+        new_y = self.waypoint_x * math.sin(degrees_rad) + self.waypoint_y * math.cos(degrees_rad)
 
         self.waypoint_x = round(new_x)
         self.waypoint_y = round(new_y)
@@ -79,12 +84,13 @@ class Ship:
 
 
 boaty_mc_boatface = Ship()
-print(boaty_mc_boatface.status())
-for inst in lines:
-    print(inst)
+if verbose: print(boaty_mc_boatface.status())
+for i, inst in enumerate(lines):
+    if verbose: print(f"i: {i}")
+    if verbose: print(inst)
     boaty_mc_boatface.step(inst)
-    print(boaty_mc_boatface.status())
+    if verbose: print(boaty_mc_boatface.status())
+    if verbose: print(f"MHD: {boaty_mc_boatface.get_manhattan_dist()}")
 
-print(boaty_mc_boatface.get_manhattan_dist())
 
-# 22222 is too low
+print(f"Final MHD: {boaty_mc_boatface.get_manhattan_dist()}")
