@@ -10,5 +10,3 @@ else:
 
 with open(filename) as f:
     lines = f.read().splitlines()
-
-o low
