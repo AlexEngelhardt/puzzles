@@ -77,5 +77,5 @@ print(b_prime)
 x = sum([a[i] * b[i] * b_prime[i] for i in range(len(a))]) % M
 print(x)
 
-# All test cases pass, but for debug==False,
+# All test cases pass, but for the real input, I get the wrong answer:
 # 756261495957905 is too low :-(
