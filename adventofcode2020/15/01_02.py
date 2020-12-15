@@ -2,10 +2,10 @@ debug = False
 
 if debug:
     filename = 'test_input'
-    n_turns = 2020 # 10
+    n_turns = 30000000  # 10
 else:
     filename = 'input'
-    n_turns = 2020
+    n_turns = 30000000  # 2020 for part 1, 30000000 for part 2
 
 with open(filename) as f:
     numbers = list(map(int, f.readline().split(",")))
@@ -38,7 +38,4 @@ for i in range(n_turns - len(numbers)):
     numbers.append(new_number)
 
 
-
-print(prev_numbers)
-print(numbers)
 print(numbers[-1])
