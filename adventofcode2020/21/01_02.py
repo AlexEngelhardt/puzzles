@@ -100,3 +100,11 @@ for line in lines:
             total += 1
 print(total)
 
+################################################################
+# Part 2
+
+print(connections)
+sorted_connections = sorted(connections, key=lambda x: x[0])
+print(sorted_connections)
+cdil = [x[1] for x in sorted_connections]
+print(",".join(cdil))
