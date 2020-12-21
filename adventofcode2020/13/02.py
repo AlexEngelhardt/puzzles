@@ -62,7 +62,7 @@ def prod(x):
 
 
 a = [i for i, x in enumerate(line2) if x != 'x']
-a = [(m - i) % m for m, i in zip(bus_IDs, a)]  # see 01.py, I'm flipping the modulo remainders around s.t. e.g. 2 (mod 13) becomes 11
+a = [(m - i) % m for m, i in zip(bus_IDs, a)]  # see 01_02.py, I'm flipping the modulo remainders around s.t. e.g. 2 (mod 13) becomes 11
 
 M = prod(bus_IDs)
 b = [M / m_i for m_i in bus_IDs]
